@@ -46,7 +46,7 @@ Release-hygiene verification: GitHub Actions [run 33442376039](https://github.co
 
 Live production alias: https://the-edl.vercel.app
 
-The Vercel deployment is built successfully. Vercel Deployment Protection / SSO remains enabled, so an unauthenticated reviewer may be asked to sign in. This must be changed in Vercel project settings before representing the alias as publicly accessible.
+The Vercel deployment is built successfully and Vercel SSO Deployment Protection is disabled for the production project. Unauthenticated HTTP checks verified the homepage, `/about`, `/register`, and `/d/1` return the ENDLINE application without Vercel login or access-protection content.
 
 ## npm security disposition
 

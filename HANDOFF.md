@@ -6,7 +6,7 @@
 - Network: GenLayer Studionet, chain ID 61999
 - Contract: `0xAC619CE31aD990C77b988308Ab101282FE75A22E`
 - Explorer: https://explorer-studio.genlayer.com
-- Frontend: https://the-edl.vercel.app (Vercel SSO/Deployment Protection may require authentication)
+- Frontend: https://the-edl.vercel.app (public unauthenticated access verified)
 
 The deployed contract is source-identical to `contracts/endline.py`, SHA-256 `1BB6D7DBE96DD25B450F347BEAA67EA5BE08D8C9A298EA8B5F098A52CD89167B`.
 

@@ -62,7 +62,7 @@ If Next.js is used:
 - environment variable for contract address;
 - production build must pass before deployment.
 
-Current release alias: https://the-edl.vercel.app. Vercel Deployment Protection / SSO is an external project setting; verify unauthenticated access before presenting the link as public.
+Current release alias: https://the-edl.vercel.app. Vercel Deployment Protection / SSO has been disabled for the production project; unauthenticated checks of `/`, `/about`, `/register`, and `/d/1` passed.
 
 ## Wallet flow
 

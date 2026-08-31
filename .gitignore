@@ -3,3 +3,4 @@ node_modules/
 coverage/
 .env.local
 __pycache__/
+*.tsbuildinfo

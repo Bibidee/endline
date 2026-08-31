@@ -10,6 +10,7 @@ export const readClient=()=>createClient({chain:studionet});
 export const writeClient=(address:`0x${string}`)=>createClient({chain:studionet,account:address,provider:window.ethereum});
 export {TransactionStatus,contractAddress};
 export async function listDependencies(){if(!contractAddress)return null;return await readClient().readContract({address:contractAddress,functionName:"get_dependencies",args:[0,50]}) as unknown as Dependency[]}
+export async function getDependencyCount(){if(!contractAddress)return null;return Number(await readClient().readContract({address:contractAddress,functionName:"get_dependency_count",args:[]}))}
 export async function getDependency(id:number){if(!contractAddress)return null;return await readClient().readContract({address:contractAddress,functionName:"get_dependency",args:[id]}) as unknown as Dependency}
 export async function getAssessments(id:number){if(!contractAddress)return null;return await readClient().readContract({address:contractAddress,functionName:"get_assessments",args:[id,0,32]}) as unknown as Assessment[]}
 export async function getSourceSet(id:number,version:number){if(!contractAddress)return null;return await readClient().readContract({address:contractAddress,functionName:"get_source_set",args:[id,version]}) as unknown as SourceSet}

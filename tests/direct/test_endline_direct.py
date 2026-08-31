@@ -12,7 +12,7 @@ def test_registers_and_persists_source_set(direct_deploy, direct_vm, direct_owne
     contract = direct_deploy(CONTRACT)
     assert register(contract) == 1
     dep = contract.get_dependency(1)
-    assert dep["creator"] == direct_owner.as_hex
+    assert dep["creator"].lower() == "0x" + direct_owner.hex()
     assert dep["source_version"] == 1 and dep["assessment_count"] == 0 and dep["is_stale"]
     assert contract.get_source_set(1, 1)["source_urls"] == list(SOURCES)
 

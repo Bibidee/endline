@@ -1,0 +1,161 @@
+{
+  "ctor": {
+    "params": [],
+    "kwparams": {}
+  },
+  "methods": {
+    "assess_dependency": {
+      "params": [
+        [
+          "dependency_id",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    },
+    "get_assessment": {
+      "params": [
+        [
+          "dependency_id",
+          "int"
+        ],
+        [
+          "sequence",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "dict"
+    },
+    "get_assessments": {
+      "params": [
+        [
+          "dependency_id",
+          "int"
+        ],
+        [
+          "offset",
+          "int"
+        ],
+        [
+          "limit",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "array"
+    },
+    "get_dependencies": {
+      "params": [
+        [
+          "offset",
+          "int"
+        ],
+        [
+          "limit",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "array"
+    },
+    "get_dependency": {
+      "params": [
+        [
+          "dependency_id",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "dict"
+    },
+    "get_dependency_count": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "int"
+    },
+    "get_source_set": {
+      "params": [
+        [
+          "dependency_id",
+          "int"
+        ],
+        [
+          "version",
+          "int"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "dict"
+    },
+    "register_dependency": {
+      "params": [
+        [
+          "name",
+          "string"
+        ],
+        [
+          "kind",
+          "string"
+        ],
+        [
+          "tracked_version",
+          "string"
+        ],
+        [
+          "canonical_key",
+          "string"
+        ],
+        [
+          "source_1",
+          "string"
+        ],
+        [
+          "source_2",
+          "string"
+        ],
+        [
+          "source_3",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "int",
+      "payable": false
+    },
+    "update_sources": {
+      "params": [
+        [
+          "dependency_id",
+          "int"
+        ],
+        [
+          "source_1",
+          "string"
+        ],
+        [
+          "source_2",
+          "string"
+        ],
+        [
+          "source_3",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "null",
+      "payable": false
+    }
+  }
+}

@@ -36,6 +36,8 @@ GitHub Actions [run 33437277667](https://github.com/Bibidee/endline/actions/runs
 
 Direct Mode covers lifecycle outcomes, invalid classifier output without state mutation, prompt injection, source-version rebinding, and consensus behavior where summary wording is non-critical but lifecycle-field disagreement is rejected.
 
+Release-hygiene verification: GitHub Actions [run 33442376039](https://github.com/Bibidee/endline/actions/runs/33442376039) completed successfully for commit `ea18b0ca62c30e4b1ebc4f4310cd9d700d7cd22a`, including every contract and frontend release-gate step.
+
 ## Frontend release
 
 Live production alias: https://the-edl.vercel.app

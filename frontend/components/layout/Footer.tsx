@@ -1,0 +1,2 @@
+import Link from "next/link";
+export function Footer(){return <footer className="site-footer"><div className="site-footer-inner"><span>ENDLINE · consensus-backed dependency lifecycle intelligence</span><div className="footer-links"><Link href="/">Registry</Link><Link href="/register">Register</Link><Link href="/about">Trust boundaries</Link><a href="https://explorer-studio.genlayer.com" target="_blank" rel="noreferrer">Studionet explorer ↗</a></div></div></footer>}

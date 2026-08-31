@@ -1,0 +1,4 @@
+import Link from "next/link";
+import {Dependency} from "../../lib/genlayer";
+import {FreshnessBadge,StatusBadge} from "../ui/StatusBadge";
+export function DependencyCard({dependency}:{dependency:Dependency}){const creator=dependency.creator?`${dependency.creator.slice(0,6)}…${dependency.creator.slice(-4)}`:"—";return <Link href={`/d/${dependency.id}`} className="dependency-card glass-card"><div className="card-top"><span className="meta">{dependency.kind}</span><FreshnessBadge stale={dependency.is_stale}/></div><h3 className="dependency-title">{dependency.name}</h3><p className="dependency-key">{dependency.canonical_key}</p><div className="card-bottom"><StatusBadge status={dependency.current_status}/><span>{dependency.tracked_version}</span></div><div className="card-bottom"><span>v{dependency.source_version} · {dependency.assessment_count} assessments</span><span>{creator}</span></div></Link>}

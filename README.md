@@ -14,8 +14,10 @@ Set `NEXT_PUBLIC_ENDLINE_CONTRACT` from a deployed Studionet contract. The front
 
 ## Checks
 
-`npm run typecheck`, `npm run lint`, `npm test`, `npm run build`, and from the repository root `python -m unittest discover -s tests/direct`.
+Run `scripts/check.ps1` on Windows, or run `pytest tests/direct -v` plus the frontend npm scripts. The contract gate includes lint, validation, schema extraction, and typecheck.
+
+Canonical keys are unique per publisher: ENDLINE derives identity from `sender_address + canonical_key`, so separate publishers may register the same canonical key.
 
 ## Status
 
-Deployment requires a configured GenLayer CLI account and injected wallet. No deployment address or transaction hashes are claimed until a real Studionet lifecycle is executed.
+The verified Studionet contract is `0xAC619CE31aD990C77b988308Ab101282FE75A22E`. See `RELEASE_EVIDENCE.md` for finalized lifecycle receipts.

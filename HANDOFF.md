@@ -1,7 +1,8 @@
 # ENDLINE Handoff
 
 - Repository: https://github.com/Bibidee/endline
-- Baseline release commit: `26204f2c803f082f4b5ffac1a5b53dd356901426`
+- Frozen contract/code baseline: `26204f2c803f082f4b5ffac1a5b53dd356901426`
+- Final repository release HEAD before closure: `a0950e9cbabdcd32c010d039fb8cc9d9682a6bb0` (CI run 33442725166 SUCCESS)
 - Network: GenLayer Studionet, chain ID 61999
 - Contract: `0xAC619CE31aD990C77b988308Ab101282FE75A22E`
 - Explorer: https://explorer-studio.genlayer.com

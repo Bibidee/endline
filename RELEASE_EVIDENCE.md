@@ -2,7 +2,11 @@
 
 Repository: https://github.com/Bibidee/endline
 
-Baseline release commit: `26204f2c803f082f4b5ffac1a5b53dd356901426`.
+Frozen contract/code baseline: `26204f2c803f082f4b5ffac1a5b53dd356901426`.
+
+Final repository release HEAD before this closure pass: `a0950e9cbabdcd32c010d039fb8cc9d9682a6bb0`.
+
+Most recent fully verified CI before this closure pass: [run 33442725166](https://github.com/Bibidee/endline/actions/runs/33442725166) — completed / success.
 
 ## Frozen Studionet contract parity
 
@@ -36,7 +40,7 @@ GitHub Actions [run 33437277667](https://github.com/Bibidee/endline/actions/runs
 
 Direct Mode covers lifecycle outcomes, invalid classifier output without state mutation, prompt injection, source-version rebinding, and consensus behavior where summary wording is non-critical but lifecycle-field disagreement is rejected.
 
-Release-hygiene verification: GitHub Actions [run 33442376039](https://github.com/Bibidee/endline/actions/runs/33442376039) completed successfully for commit `ea18b0ca62c30e4b1ebc4f4310cd9d700d7cd22a`, including every contract and frontend release-gate step.
+Release-hygiene verification: GitHub Actions [run 33442376039](https://github.com/Bibidee/endline/actions/runs/33442376039) completed successfully for commit `ea18b0ca62c30e4b1ebc4f4310cd9d700d7cd22a`, including every contract and frontend release-gate step. The documentation-only follow-up run 33442725166 also passed for `a0950e9cbabdcd32c010d039fb8cc9d9682a6bb0`.
 
 ## Frontend release
 

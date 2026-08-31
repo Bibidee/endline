@@ -1,0 +1,4 @@
+.status-deprecated{color:#f5a65b;background:rgba(245,166,91,.1);border-color:rgba(245,166,91,.28)}
+.status-security_only{color:#f6c768;background:rgba(246,199,104,.1);border-color:rgba(246,199,104,.28)}
+.status-replaced{color:#cba6f7;background:rgba(203,166,247,.1);border-color:rgba(203,166,247,.28)}
+.status-unknown{color:#c9c4bc;background:rgba(201,196,188,.08);border-color:rgba(201,196,188,.2)}

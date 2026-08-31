@@ -1,4 +1,5 @@
 # { "Depends": "py-genlayer:test" }
+# pyright: reportUndefinedVariable=false
 import json
 import ipaddress
 import re

@@ -2,7 +2,7 @@
 
 Repository: https://github.com/Bibidee/endline
 Branch: master
-Source commit: 33c8d24a80e212f0971dddb4edf813255698cba0
+Source commit: e1b27ce5d7bd678127faccd161c7b635cd07c7cd
 Contract SHA-256 at audit: F08218B647208EA2779CD8499D94A195097CA10CB1A56B1AC03A229C6C0FBBEC
 GenLayer CLI: 0.39.2
 genvm-linter: 0.11.0

@@ -14,4 +14,10 @@ Assessment tx: not run
 Source-update tx: not run
 Second assessment tx: not run
 Tests: `npm run typecheck` passed; `npm run build` passed; ESLint passed with `ESLINT_USE_FLAT_CONFIG=false`; Vitest could not start because the parent workspace config resolver attempts to read an inaccessible directory; Python unittest runner is unavailable (`python`/`py` not installed).
-Known limitations: deployment credentials and a funded injected wallet are required for real Studionet smoke testing; configured source ownership is not cryptographically certified; frontend contract ABI/read/write integration still needs completion.
+Known limitations: Studionet rejects even a minimal official-template-shaped contract with `invalid_contract`; configured source ownership is not cryptographically certified; browser deployment URL is not available.
+
+FINAL STATUS
+
+CODE COMPLETE / EXTERNAL NETWORK BLOCKED
+
+Controllable frontend, contract source, CI, scripts, documentation, and release evidence are committed and pushed. Studionet deployment remains externally blocked by the runtime boundary documented above.

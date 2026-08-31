@@ -1,23 +1,18 @@
-# ENDLINE Handoff
+# ENDLINE Release Evidence
 
-Repository: local workspace
-Commit: unavailable (workspace .git is read-only under sandbox identity)
-Frontend: not deployed
-Network: GenLayer Studionet
-Chain ID: 61999
-Contract: not deployed successfully. The unlocked `faultline-dev` account was used, but all deployment attempts finalized with `execution_result: ERROR` / `invalid_contract`, so none of the returned candidate addresses are valid deployments.
-Explorer: https://explorer-studio.genlayer.com
-Failed deployment txs: `0x3c33f3d788b4cb881e172865e9cd397b4769b034404c8faab768d6ad2c68c71c`, `0x36f5a5b20b10f422b423d31086bf55cc40825fc2c917d816a2ee19a9e17f3b53`, `0xd37093a82ff927e17055b616c0811079f39e8bd7af9c390e15300d165d302fef`
-Runtime isolation: minimal official-template-shaped probe also failed with `invalid_contract` using both `py-genlayer:test` (`0x177df597a5cbabaf44ad279dea6f2fe147792d4b2046743968f73dcdad69bece`) and `py-genlayer:latest` (`0x19b70f359dc2f4625e64f60790c97e5ce1ac64815de050d429575d828135e1b3`). This indicates a Studionet validator/runtime or CLI-to-network runtime mapping failure rather than an ENDLINE storage-schema error.
-Registration tx: not run
-Assessment tx: not run
-Source-update tx: not run
-Second assessment tx: not run
-Tests: `npm run typecheck` passed; `npm run build` passed; ESLint passed with `ESLINT_USE_FLAT_CONFIG=false`; Vitest could not start because the parent workspace config resolver attempts to read an inaccessible directory; Python unittest runner is unavailable (`python`/`py` not installed).
-Known limitations: Studionet rejects even a minimal official-template-shaped contract with `invalid_contract`; configured source ownership is not cryptographically certified; browser deployment URL is not available.
+Repository: https://github.com/Bibidee/endline
+Branch: master
+Source commit: 2cef55d64abec33cdc6a21b6b12efc882b83b75d
+Contract SHA-256: 1BB6D7DBE96DD25B450F347BEAA67EA5BE08D8C9A298EA8B5F098A52CD89167B
+Runtime Depends: py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6
 
-FINAL STATUS
+Contract gates: lint PASS; validate PASS; schema PASS (9 methods); typecheck PASS.
+Policy tests: 64 passed. Direct Mode: blocked by Windows gltest temp-file lock; CI executes the suite on Ubuntu.
+Frontend: typecheck PASS; build PASS; local Vitest blocked by OneDrive resolver.
+GitHub Actions: run 33431297655 in progress at last check.
 
-CODE COMPLETE / EXTERNAL NETWORK BLOCKED
-
-Controllable frontend, contract source, CI, scripts, documentation, and release evidence are committed and pushed. Studionet deployment remains externally blocked by the runtime boundary documented above.
+Studionet contract: 0xAC619CE31aD990C77b988308Ab101282FE75A22E
+Deployment tx: 0xd4cd8cac1af337ea3aafc21d04b600dd48dce66d7fa1120353135e9cf3913b72
+Schema lookup: verified.
+Lifecycle transactions: not successfully completed; registration attempts failed due CLI string argument encoding.
+Frontend deployment: not available.

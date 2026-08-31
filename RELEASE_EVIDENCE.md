@@ -2,31 +2,17 @@
 
 Repository: https://github.com/Bibidee/endline
 Branch: master
-Source commit: e1b27ce5d7bd678127faccd161c7b635cd07c7cd
-Contract SHA-256 at audit: F08218B647208EA2779CD8499D94A195097CA10CB1A56B1AC03A229C6C0FBBEC
-GenLayer CLI: 0.39.2
-genvm-linter: 0.11.0
-Node: v22.22.2
-Python: 3.12.10
-genlayer-test: NOT AVAILABLE as standalone command
-genlayer-js: 1.1.8 (frontend dependency)
+Source commit: 2cef55d64abec33cdc6a21b6b12efc882b83b75d
+Contract SHA-256: 1BB6D7DBE96DD25B450F347BEAA67EA5BE08D8C9A298EA8B5F098A52CD89167B
+Runtime Depends: py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6
 
-Contract lint: PASS (warning: bare Exception remains)
-Contract validate: BLOCKED — installed validator cannot import `genlayer.py`
-Contract schema: BLOCKED — same SDK import failure
-Contract typecheck: PASS (0 errors; SDK names reported as unresolved by Pyright)
-Direct Mode tests: NOT RUN — no standalone genlayer-test command available
-Frontend tests: BLOCKED — Vitest inherits inaccessible parent config path
-Frontend typecheck: PASS
-Frontend lint: PASS with `ESLINT_USE_FLAT_CONFIG=false`
-Frontend production build: PASS
-CI: CONFIGURED, not run remotely
+Contract gates: lint PASS; validate PASS; schema PASS (9 methods); typecheck PASS.
+Policy tests: 64 passed. Direct Mode: blocked by Windows gltest temp-file lock; CI executes the suite on Ubuntu.
+Frontend: typecheck PASS; build PASS; local Vitest blocked by OneDrive resolver.
+GitHub Actions: run 33431297655 in progress at last check.
 
-Network attempted: GenLayer Studionet (chain ID 61999)
-Canonical deployment network: NOT AVAILABLE
-Canonical contract address: NOT AVAILABLE
-Explorer: https://explorer-studio.genlayer.com
-Deployment/registration/assessment/source-update transactions: NOT AVAILABLE
-Frontend production URL: NOT AVAILABLE
-
-Runtime diagnostics: official-template-shaped probes failed with `invalid_contract` on Studionet. Failed txs are recorded in HANDOFF.md and are not treated as deployments.
+Studionet contract: 0xAC619CE31aD990C77b988308Ab101282FE75A22E
+Deployment tx: 0xd4cd8cac1af337ea3aafc21d04b600dd48dce66d7fa1120353135e9cf3913b72
+Schema lookup: verified.
+Lifecycle transactions: not successfully completed; registration attempts failed due CLI string argument encoding.
+Frontend deployment: not available.

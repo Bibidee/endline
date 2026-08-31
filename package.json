@@ -1,0 +1,1 @@
+{"name":"endline","private":true,"scripts":{"dev":"npm --prefix frontend run dev","test":"npm --prefix frontend test","typecheck":"npm --prefix frontend run typecheck","lint":"npm --prefix frontend run lint","build":"npm --prefix frontend run build","test:contract":"python -m unittest discover -s tests/direct"}}

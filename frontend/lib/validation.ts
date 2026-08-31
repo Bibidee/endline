@@ -1,0 +1,2 @@
+export const KINDS=["API","SDK","MODEL","PACKAGE","PROTOCOL","SERVICE","OTHER"] as const;
+export function validateSources(sources:string[]){return sources.length>=1&&sources.length<=3&&sources.every(s=>{try{const u=new URL(s);return u.protocol==='https:'&&!u.username&&!u.password&&!['localhost','127.0.0.1','0.0.0.0'].includes(u.hostname)&&!u.hostname.endsWith('.local')&&s.length<=500}catch{return false}})}

@@ -1,0 +1,2 @@
+import {describe,it,expect} from 'vitest'; import {validateSources} from './validation';
+describe('source validation',()=>{it('accepts bounded public https sources',()=>expect(validateSources(['https://example.com/docs'])).toBe(true));it('rejects unsafe or unbounded sets',()=>{expect(validateSources([])).toBe(false);expect(validateSources(['http://example.com'])).toBe(false);expect(validateSources(['https://localhost/x'])).toBe(false);expect(validateSources(['https://a.com','https://b.com','https://c.com','https://d.com'])).toBe(false)})})

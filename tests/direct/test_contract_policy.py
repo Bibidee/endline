@@ -26,13 +26,13 @@ def test_result_accepts_unknown(): assert validate_result(result(status="UNKNOWN
 def test_missing_required_field_rejected(field):
     value=result(); del value[field]
     with pytest.raises(ValueError): validate_result(value)
-@pytest.mark.parametrize("status", ["BROKEN", "", "active"])
+@pytest.mark.parametrize("status", ["BROKEN", "", "ACTIVELY_SUPPORTED"])
 def test_invalid_status_rejected(status):
     with pytest.raises(ValueError): validate_result(result(status=status))
 @pytest.mark.parametrize("reason", ["BROKEN", "", "ACTIVE"])
 def test_invalid_reason_rejected(reason):
     with pytest.raises(ValueError): validate_result(result(reason_code=reason))
-@pytest.mark.parametrize("evidence", ["BROKEN", "", "SUFFICIENT "])
+@pytest.mark.parametrize("evidence", ["BROKEN", "", "UNCERTAIN"])
 def test_invalid_evidence_rejected(evidence):
     with pytest.raises(ValueError): validate_result(result(evidence_state=evidence))
 @pytest.mark.parametrize("value", [1, None, "true", []])
@@ -49,9 +49,18 @@ def test_ambiguous_active_rejected():
     with pytest.raises(ValueError): validate_result(result(evidence_state="AMBIGUOUS"))
 def test_insufficient_deprecated_rejected():
     with pytest.raises(ValueError): validate_result(result(status="DEPRECATED", evidence_state="INSUFFICIENT"))
+def test_insufficient_requires_its_reason_code():
+    with pytest.raises(ValueError): validate_result(result(status="UNKNOWN", evidence_state="INSUFFICIENT"))
 def test_retirement_active_rejected():
     with pytest.raises(ValueError): validate_result(result(reason_code="RETIREMENT_EFFECTIVE"))
+def test_retirement_requires_end_of_life():
+    with pytest.raises(ValueError): validate_result(result(status="DEPRECATED", reason_code="RETIREMENT_EFFECTIVE"))
 def test_security_reason_requires_security_status():
     with pytest.raises(ValueError): validate_result(result(reason_code="SECURITY_MAINTENANCE_ONLY"))
+def test_replaced_requires_a_successor():
+    with pytest.raises(ValueError): validate_result(result(status="REPLACED", reason_code="SUCCESSOR_IDENTIFIED"))
 def test_consensus_whitespace_normalises(): assert validate_result(result(replacement="  Responses   API "))["replacement"] == "Responses API"
 def test_summary_whitespace_normalises(): assert validate_result(result(summary="  stable   evidence "))["summary"] == "stable evidence"
+def test_contract_style_enum_normalisation():
+    outcome = validate_result(result(status=" active ", reason_code=" no_change_notice ", evidence_state=" sufficient "))
+    assert (outcome["status"], outcome["reason_code"], outcome["evidence_state"]) == ("ACTIVE", "NO_CHANGE_NOTICE", "SUFFICIENT")

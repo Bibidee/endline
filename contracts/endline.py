@@ -105,11 +105,16 @@ class EndlineRegistry(gl.Contract):
         value["effective_date"] = value["effective_date"].strip(); value["replacement"] = self._clean(value["replacement"], 160); value["summary"] = self._clean(value["summary"], 320)
         self._require(value["status"] in STATUSES and value["reason_code"] in REASONS and value["evidence_state"] in EVIDENCE, "invalid adjudication enum")
         self._require(self._valid_date(value["effective_date"]), "invalid effective date")
-        if value["evidence_state"] == "INSUFFICIENT": self._require(value["status"] == "UNKNOWN" and value["reason_code"] == "INSUFFICIENT_EVIDENCE", "insufficient evidence invariant")
-        if value["evidence_state"] == "AMBIGUOUS": self._require(value["status"] != "ACTIVE", "ambiguous evidence invariant")
-        if value["reason_code"] == "RETIREMENT_EFFECTIVE": self._require(value["status"] == "END_OF_LIFE", "retirement invariant")
-        if value["reason_code"] == "SECURITY_MAINTENANCE_ONLY": self._require(value["status"] == "SECURITY_ONLY", "security invariant")
-        if value["status"] == "REPLACED": self._require(len(value["replacement"]) > 0, "replacement requires successor")
+        status, reason, evidence = value["status"], value["reason_code"], value["evidence_state"]
+        date, replacement = value["effective_date"], value["replacement"]
+        if evidence == "INSUFFICIENT": self._require(status == "UNKNOWN" and reason == "INSUFFICIENT_EVIDENCE", "insufficient evidence invariant")
+        elif evidence == "AMBIGUOUS": self._require(status == "UNKNOWN" and reason == "CONFLICTING_EVIDENCE", "ambiguous evidence invariant")
+        elif status == "ACTIVE": self._require(reason == "NO_CHANGE_NOTICE" and not date and not replacement and not value["migration_required"] and not value["breaking_change"], "active compatibility invariant")
+        elif status == "DEPRECATED": self._require(reason in ("OFFICIAL_DEPRECATION_NOTICE", "RETIREMENT_ANNOUNCED") and not replacement, "deprecation compatibility invariant")
+        elif status == "SECURITY_ONLY": self._require(reason == "SECURITY_MAINTENANCE_ONLY" and not date and not replacement, "security compatibility invariant")
+        elif status == "END_OF_LIFE": self._require(reason == "RETIREMENT_EFFECTIVE" and bool(date), "retirement compatibility invariant")
+        elif status == "REPLACED": self._require(reason == "SUCCESSOR_IDENTIFIED" and bool(replacement) and not date, "replacement compatibility invariant")
+        else: self._require(reason == "UNCLASSIFIED" and not date and not replacement and not value["migration_required"] and not value["breaking_change"], "unknown compatibility invariant")
         return value
 
     def _valid_url(self, url: str) -> bool:

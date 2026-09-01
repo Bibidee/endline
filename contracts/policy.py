@@ -48,9 +48,21 @@ def validate_result(value: object) -> dict:
     if result["status"] not in STATUSES or result["reason_code"] not in REASONS or result["evidence_state"] not in EVIDENCE: raise ValueError("invalid enum")
     if not valid_date(result["effective_date"]): raise ValueError("invalid date")
     if len(result["replacement"]) > 160 or len(result["summary"]) > 320: raise ValueError("field too long")
-    if result["evidence_state"] == "INSUFFICIENT" and (result["status"] != "UNKNOWN" or result["reason_code"] != "INSUFFICIENT_EVIDENCE"): raise ValueError("insufficient evidence invariant")
-    if result["evidence_state"] == "AMBIGUOUS" and result["status"] == "ACTIVE": raise ValueError("ambiguous evidence invariant")
-    if result["reason_code"] == "RETIREMENT_EFFECTIVE" and result["status"] != "END_OF_LIFE": raise ValueError("retirement invariant")
-    if result["reason_code"] == "SECURITY_MAINTENANCE_ONLY" and result["status"] != "SECURITY_ONLY": raise ValueError("security invariant")
-    if result["status"] == "REPLACED" and not result["replacement"]: raise ValueError("replacement requires successor")
+    status, reason, evidence = result["status"], result["reason_code"], result["evidence_state"]
+    date_value, replacement = result["effective_date"], result["replacement"]
+    if evidence == "INSUFFICIENT":
+        if status != "UNKNOWN" or reason != "INSUFFICIENT_EVIDENCE": raise ValueError("insufficient evidence invariant")
+    elif evidence == "AMBIGUOUS":
+        if status != "UNKNOWN" or reason != "CONFLICTING_EVIDENCE": raise ValueError("ambiguous evidence invariant")
+    elif status == "ACTIVE":
+        if reason != "NO_CHANGE_NOTICE" or date_value or replacement or result["migration_required"] or result["breaking_change"]: raise ValueError("active compatibility invariant")
+    elif status == "DEPRECATED":
+        if reason not in ("OFFICIAL_DEPRECATION_NOTICE", "RETIREMENT_ANNOUNCED") or replacement: raise ValueError("deprecation compatibility invariant")
+    elif status == "SECURITY_ONLY":
+        if reason != "SECURITY_MAINTENANCE_ONLY" or date_value or replacement: raise ValueError("security compatibility invariant")
+    elif status == "END_OF_LIFE":
+        if reason != "RETIREMENT_EFFECTIVE" or not date_value: raise ValueError("retirement compatibility invariant")
+    elif status == "REPLACED":
+        if reason != "SUCCESSOR_IDENTIFIED" or not replacement or date_value: raise ValueError("replacement compatibility invariant")
+    elif reason != "UNCLASSIFIED" or date_value or replacement or result["migration_required"] or result["breaking_change"]: raise ValueError("unknown compatibility invariant")
     return result

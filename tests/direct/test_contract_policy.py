@@ -59,7 +59,25 @@ def test_security_reason_requires_security_status():
     with pytest.raises(ValueError): validate_result(result(reason_code="SECURITY_MAINTENANCE_ONLY"))
 def test_replaced_requires_a_successor():
     with pytest.raises(ValueError): validate_result(result(status="REPLACED", reason_code="SUCCESSOR_IDENTIFIED"))
-def test_consensus_whitespace_normalises(): assert validate_result(result(replacement="  Responses   API "))["replacement"] == "Responses API"
+def test_consensus_whitespace_normalises(): assert validate_result(result(status="REPLACED", reason_code="SUCCESSOR_IDENTIFIED", replacement="  Responses   API "))["replacement"] == "Responses API"
+@pytest.mark.parametrize("overrides", [
+    {"reason_code":"RETIREMENT_ANNOUNCED"},
+    {"replacement":"successor"},
+    {"effective_date":"2026-01-01"},
+    {"migration_required":True},
+    {"breaking_change":True},
+])
+def test_active_compatibility_matrix_rejects_incompatible_fields(overrides):
+    with pytest.raises(ValueError): validate_result(result(**overrides))
+@pytest.mark.parametrize("overrides", [
+    {"status":"SECURITY_ONLY", "reason_code":"OFFICIAL_DEPRECATION_NOTICE"},
+    {"status":"END_OF_LIFE", "reason_code":"RETIREMENT_EFFECTIVE"},
+    {"status":"REPLACED", "reason_code":"SUCCESSOR_IDENTIFIED", "replacement":"v2", "effective_date":"2026-01-01"},
+    {"status":"UNKNOWN", "reason_code":"CONFLICTING_EVIDENCE", "evidence_state":"SUFFICIENT"},
+    {"status":"UNKNOWN", "reason_code":"UNCLASSIFIED", "evidence_state":"AMBIGUOUS"},
+])
+def test_lifecycle_compatibility_matrix_rejects_impossible_combinations(overrides):
+    with pytest.raises(ValueError): validate_result(result(**overrides))
 def test_summary_whitespace_normalises(): assert validate_result(result(summary="  stable   evidence "))["summary"] == "stable evidence"
 def test_contract_style_enum_normalisation():
     outcome = validate_result(result(status=" active ", reason_code=" no_change_notice ", evidence_state=" sufficient "))

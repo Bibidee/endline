@@ -38,7 +38,7 @@ Production deployment: `dpl_DRRApkKpx4wsVkNmeKTh36v5XgnU`
 
 Production alias: https://the-edl.vercel.app
 
-Production is configured with `NEXT_PUBLIC_ENDLINE_CONTRACT=0x05B8B436CdA0b32f56f2C7F2d57da224c374C7D3`, chain ID `61999`, and the Studionet RPC. Unauthenticated smoke checks of `/`, `/about`, `/register`, and `/d/1` returned HTTP 200 and rendered ENDLINE.
+Production is configured with `NEXT_PUBLIC_ENDLINE_CONTRACT=0x1C3B33d97096ED9DCBc91C6B7f321395507fC739`, chain ID `61999`, and the Studionet RPC. Unauthenticated smoke checks of `/`, `/about`, `/register`, and `/d/1` returned HTTP 200 and rendered ENDLINE.
 
 ## npm security disposition
 

@@ -116,3 +116,6 @@ Known limitations:
 - https://docs.genlayer.com/developers/intelligent-contracts/tooling-setup
 - https://docs.genlayer.com/developers/intelligent-contracts/deploying
 - https://docs.genlayer.com/developers/intelligent-contracts/features/web-access
+### Corrective liveness deployment
+
+Canonical contract: `0x1C3B33d97096ED9DCBc91C6B7f321395507fC739`. Deployment tx: `0xaa37c9a7a98e74cf278b83a22c63279569182ef0ef4b5a8505ee0eda750ec4aa`. The fresh lifecycle completed through assessment 2 with authoritative `source_version=2`, `assessment_count=2`, and `is_stale=false`.

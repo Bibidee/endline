@@ -25,3 +25,6 @@ The verified Studionet contract is `0x05B8B436CdA0b32f56f2C7F2d57da224c374C7D3`.
 The deployed frontend is https://the-edl.vercel.app. It is built against Studionet and the canonical contract, and public unauthenticated access to the production alias has been verified.
 
 The frozen deployed contract baseline is distinct from the repository release history; the latest verified release evidence and CI links are maintained in `RELEASE_EVIDENCE.md`.
+### Canonical deployment
+
+The current Studionet contract is `0x1C3B33d97096ED9DCBc91C6B7f321395507fC739`; the verified lifecycle closes at source version 2 with two assessments and `is_stale = false`. Live app: https://the-edl.vercel.app.

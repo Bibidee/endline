@@ -163,3 +163,6 @@ The UI must always show:
 - last assessed time.
 
 Do not label the result “live” unless an assessment is being run at that moment.
+### Consensus boundary
+
+Validators must agree on status, reason_code, evidence_state, lifecycle-critical dates, and REPLACED successor identity. Advisory metadata differences do not produce disagreement.

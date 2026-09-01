@@ -280,3 +280,6 @@ some-model:model-name:2026-01
 ```
 
 The canonical key is supplied by the registrant and enforced unique. Do not attempt universal dependency naming in MVP.
+### Liveness equivalence policy
+
+Consensus-critical fields are status, reason_code, evidence_state, lifecycle-critical effective_date, and replacement for REPLACED. Summary, migration_required, breaking_change, and supplementary replacement metadata are advisory and excluded from equivalence. UNKNOWN AMBIGUOUS/INSUFFICIENT results require empty lifecycle metadata.

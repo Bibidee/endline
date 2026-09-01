@@ -18,9 +18,14 @@ def result(**overrides):
 
 def test_result_accepts_active(): assert validate_result(result())["status"] == "ACTIVE"
 def test_result_accepts_deprecated(): assert validate_result(result(status="DEPRECATED",reason_code="OFFICIAL_DEPRECATION_NOTICE"))["status"] == "DEPRECATED"
+def test_deprecated_allows_migration_metadata():
+    value = result(status="DEPRECATED", reason_code="RETIREMENT_ANNOUNCED", effective_date="2026-12-31", replacement="Python 3", migration_required=True, breaking_change=True)
+    assert validate_result(value)["replacement"] == "Python 3"
 def test_result_accepts_replaced(): assert validate_result(result(status="REPLACED",reason_code="SUCCESSOR_IDENTIFIED",replacement="v2"))["replacement"] == "v2"
 def test_result_accepts_security_only(): assert validate_result(result(status="SECURITY_ONLY",reason_code="SECURITY_MAINTENANCE_ONLY"))["status"] == "SECURITY_ONLY"
 def test_result_accepts_eol(): assert validate_result(result(status="END_OF_LIFE",reason_code="RETIREMENT_EFFECTIVE",effective_date="2026-01-01"))["status"] == "END_OF_LIFE"
+def test_eol_allows_successor_metadata():
+    assert validate_result(result(status="END_OF_LIFE", reason_code="RETIREMENT_EFFECTIVE", effective_date="2026-01-01", replacement="Python 3", migration_required=True))["status"] == "END_OF_LIFE"
 def test_result_accepts_unknown(): assert validate_result(result(status="UNKNOWN",reason_code="INSUFFICIENT_EVIDENCE",evidence_state="INSUFFICIENT"))["status"] == "UNKNOWN"
 @pytest.mark.parametrize("field", ["status","effective_date","replacement","migration_required","breaking_change","reason_code","evidence_state","summary"])
 def test_missing_required_field_rejected(field):

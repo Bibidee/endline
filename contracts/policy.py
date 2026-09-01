@@ -57,12 +57,12 @@ def validate_result(value: object) -> dict:
     elif status == "ACTIVE":
         if reason != "NO_CHANGE_NOTICE" or date_value or replacement or result["migration_required"] or result["breaking_change"]: raise ValueError("active compatibility invariant")
     elif status == "DEPRECATED":
-        if reason not in ("OFFICIAL_DEPRECATION_NOTICE", "RETIREMENT_ANNOUNCED") or replacement: raise ValueError("deprecation compatibility invariant")
+        if reason not in ("OFFICIAL_DEPRECATION_NOTICE", "RETIREMENT_ANNOUNCED") or (reason != "RETIREMENT_ANNOUNCED" and date_value): raise ValueError("deprecation compatibility invariant")
     elif status == "SECURITY_ONLY":
         if reason != "SECURITY_MAINTENANCE_ONLY" or date_value or replacement: raise ValueError("security compatibility invariant")
     elif status == "END_OF_LIFE":
         if reason != "RETIREMENT_EFFECTIVE" or not date_value: raise ValueError("retirement compatibility invariant")
     elif status == "REPLACED":
-        if reason != "SUCCESSOR_IDENTIFIED" or not replacement or date_value: raise ValueError("replacement compatibility invariant")
+        if reason != "SUCCESSOR_IDENTIFIED" or not replacement: raise ValueError("replacement compatibility invariant")
     elif reason != "UNCLASSIFIED" or date_value or replacement or result["migration_required"] or result["breaking_change"]: raise ValueError("unknown compatibility invariant")
     return result

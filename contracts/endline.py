@@ -110,10 +110,10 @@ class EndlineRegistry(gl.Contract):
         if evidence == "INSUFFICIENT": self._require(status == "UNKNOWN" and reason == "INSUFFICIENT_EVIDENCE", "insufficient evidence invariant")
         elif evidence == "AMBIGUOUS": self._require(status == "UNKNOWN" and reason == "CONFLICTING_EVIDENCE", "ambiguous evidence invariant")
         elif status == "ACTIVE": self._require(reason == "NO_CHANGE_NOTICE" and not date and not replacement and not value["migration_required"] and not value["breaking_change"], "active compatibility invariant")
-        elif status == "DEPRECATED": self._require(reason in ("OFFICIAL_DEPRECATION_NOTICE", "RETIREMENT_ANNOUNCED") and not replacement, "deprecation compatibility invariant")
+        elif status == "DEPRECATED": self._require(reason in ("OFFICIAL_DEPRECATION_NOTICE", "RETIREMENT_ANNOUNCED") and (reason == "RETIREMENT_ANNOUNCED" or not date), "deprecation compatibility invariant")
         elif status == "SECURITY_ONLY": self._require(reason == "SECURITY_MAINTENANCE_ONLY" and not date and not replacement, "security compatibility invariant")
         elif status == "END_OF_LIFE": self._require(reason == "RETIREMENT_EFFECTIVE" and bool(date), "retirement compatibility invariant")
-        elif status == "REPLACED": self._require(reason == "SUCCESSOR_IDENTIFIED" and bool(replacement) and not date, "replacement compatibility invariant")
+        elif status == "REPLACED": self._require(reason == "SUCCESSOR_IDENTIFIED" and bool(replacement), "replacement compatibility invariant")
         else: self._require(reason == "UNCLASSIFIED" and not date and not replacement and not value["migration_required"] and not value["breaking_change"], "unknown compatibility invariant")
         return value
 
@@ -210,8 +210,14 @@ Return structured JSON fields status, effective_date, replacement, migration_req
         def leader() -> dict: return self._classify(d)
         def validator(leader_result) -> bool:
             if not isinstance(leader_result, gl.vm.Return): return False
-            candidate, agreed = leader(), leader_result.calldata
-            return all(agreed[k] == candidate[k] for k in ("status", "effective_date", "replacement", "migration_required", "breaking_change", "reason_code", "evidence_state"))
+            candidate = leader()
+            try: agreed = self._validate_result(leader_result.calldata)
+            except Exception: return False
+            for key in ("status", "effective_date", "replacement", "migration_required", "breaking_change", "reason_code", "evidence_state"):
+                left, right = agreed[key], candidate[key]
+                if key == "replacement": left, right = self._clean(left, 160).lower(), self._clean(right, 160).lower()
+                if left != right: return False
+            return True
         result = gl.vm.run_nondet_unsafe(leader, validator)
         seq = d.assessment_count + 1
         self.assessments[self._key(dependency_id, seq)] = Assessment(dependency_id, seq,

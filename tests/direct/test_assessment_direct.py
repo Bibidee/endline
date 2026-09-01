@@ -93,3 +93,16 @@ def test_consensus_ignores_summary_but_rejects_a_critical_field_difference(direc
     direct_vm.mock_web("https://.*", {"status": 200, "body": "same evidence"})
     direct_vm.mock_llm(".*", json.dumps(result("DEPRECATED", "OFFICIAL_DEPRECATION_NOTICE")))
     assert direct_vm.run_validator() is False
+
+
+def test_consensus_canonicalises_replacement_identity_but_rejects_status_change(direct_deploy, direct_vm):
+    contract = prepared(direct_deploy, direct_vm, result("REPLACED", "SUCCESSOR_IDENTIFIED", replacement="Python 3"))
+    contract.assess_dependency(1)
+    direct_vm.clear_mocks()
+    direct_vm.mock_web("https://.*", {"status": 200, "body": "same evidence"})
+    direct_vm.mock_llm(".*", json.dumps(result("REPLACED", "SUCCESSOR_IDENTIFIED", replacement="  python   3  ")))
+    assert direct_vm.run_validator() is True
+    direct_vm.clear_mocks()
+    direct_vm.mock_web("https://.*", {"status": 200, "body": "same evidence"})
+    direct_vm.mock_llm(".*", json.dumps(result("END_OF_LIFE", "RETIREMENT_EFFECTIVE", effective_date="2026-01-01", replacement="Python 3")))
+    assert direct_vm.run_validator() is False

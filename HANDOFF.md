@@ -2,8 +2,9 @@
 
 - Repository: https://github.com/Bibidee/endline
 - Contract-changing commit: `adfde5288f514f1288a1fcfe15cf74ef2bb60a1e`
-- Canonical contract: `0x05B8B436CdA0b32f56f2C7F2d57da224c374C7D3`
-- Contract SHA-256: `CFA705BF7FB8BB7E6512CC85FB15CEC2729C0E110B665FCD411B58C5CD605E0B`
+- Superseded historical contract: `0x05B8B436CdA0b32f56f2C7F2d57da224c374C7D3`
+- Current canonical contract: `0x1C3B33d97096ED9DCBc91C6B7f321395507fC739`
+- Current contract SHA-256: `F1584820F3B20E2DE1A1D6B495A8CADBA6B8D3D7BE46E12DC968B16E6209872F`
 - Network: GenLayer Studionet (61999)
 - Frontend: https://the-edl.vercel.app
 - Vercel deployment: `dpl_DRRApkKpx4wsVkNmeKTh36v5XgnU`

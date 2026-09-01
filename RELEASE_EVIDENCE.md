@@ -6,8 +6,9 @@ Repository: https://github.com/Bibidee/endline
 
 - Contract-changing commit: `adfde5288f514f1288a1fcfe15cf74ef2bb60a1e`
 - Final repository HEAD before this documentation closeout: `373ba892355302affe4d7d2e07be6e02074bc21c`
-- Contract SHA-256: `CFA705BF7FB8BB7E6512CC85FB15CEC2729C0E110B665FCD411B58C5CD605E0B`
-- Studionet contract: `0x05B8B436CdA0b32f56f2C7F2d57da224c374C7D3`
+- Superseded historical SHA-256: `CFA705BF7FB8BB7E6512CC85FB15CEC2729C0E110B665FCD411B58C5CD605E0B`
+- Current contract SHA-256: `F1584820F3B20E2DE1A1D6B495A8CADBA6B8D3D7BE46E12DC968B16E6209872F`
+- Current Studionet contract: `0x1C3B33d97096ED9DCBc91C6B7f321395507fC739`
 - Deployment transaction: unavailable from retained CLI output; deployed source was retrieved with `genlayer code` and matches repository source content.
 - Network: GenLayer Studionet, chain ID `61999`, RPC `https://studio.genlayer.com/api`
 
@@ -55,3 +56,10 @@ Deployment transaction: `0xaa37c9a7a98e74cf278b83a22c63279569182ef0ef4b5a8505ee0
 Fresh lifecycle: registration `0x53c52d5d80d92e33ad213a0427211af9f53c0b159b58f17ab1f46f85efe4b8b6`; assessment 1 `0x148fb3e16be1f895c9a913cd2781e5a21d8ac97646c9b771cf6d44b9b0422deb`; source update `0xfe045b68a89cf8d74590deeaf3372c89ee16252f1715e0c736da27777aea51d7`; assessment 2 `0xda7ce09792723bf6824a39b472d4d581ec1637cf4aa2a0a9d59e958a3bba0198`.
 
 Final authoritative state: source_version 2, assessment_count 2, current sequence 2, current assessment source version 2, is_stale false. Production frontend is `https://the-edl.vercel.app` and is rebound to the canonical contract.
+## Final release hygiene
+
+- Frozen contract SHA verified unchanged: `F1584820F3B20E2DE1A1D6B495A8CADBA6B8D3D7BE46E12DC968B16E6209872F`.
+- Independent parity: PASS after normalizing CLI `Result:` wrapper and line endings; normalized deployed source content matched `contracts/endline.py` exactly.
+- `npm audit --prefix frontend`: 7 vulnerabilities (4 moderate, 2 high, 1 critical). High/critical findings are PostCSS transitively bundled by Next.js and esbuild/Vite/Vitest development tooling; fixes require breaking Next.js 16/Vitest 4 upgrades, so no force upgrade was applied.
+- `npm audit --omit=dev --prefix frontend`: 2 vulnerabilities (1 moderate, 1 high), both PostCSS through Next.js; remediation requires the breaking Next.js 16 upgrade.
+- Final cleanup CI is run after this documentation commit.

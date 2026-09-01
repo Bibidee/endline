@@ -77,7 +77,7 @@ def test_active_compatibility_matrix_rejects_incompatible_fields(overrides):
 @pytest.mark.parametrize("overrides", [
     {"status":"SECURITY_ONLY", "reason_code":"OFFICIAL_DEPRECATION_NOTICE"},
     {"status":"END_OF_LIFE", "reason_code":"RETIREMENT_EFFECTIVE"},
-    {"status":"REPLACED", "reason_code":"SUCCESSOR_IDENTIFIED", "replacement":"v2", "effective_date":"2026-01-01"},
+    {"status":"REPLACED", "reason_code":"SUCCESSOR_IDENTIFIED"},
     {"status":"UNKNOWN", "reason_code":"CONFLICTING_EVIDENCE", "evidence_state":"SUFFICIENT"},
     {"status":"UNKNOWN", "reason_code":"UNCLASSIFIED", "evidence_state":"AMBIGUOUS"},
 ])

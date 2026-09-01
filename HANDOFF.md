@@ -1,21 +1,15 @@
 # ENDLINE Handoff
 
 - Repository: https://github.com/Bibidee/endline
-- Frozen contract/code baseline: `26204f2c803f082f4b5ffac1a5b53dd356901426`
-- Final repository release HEAD before closure: `a0950e9cbabdcd32c010d039fb8cc9d9682a6bb0` (CI run 33442725166 SUCCESS)
-- Network: GenLayer Studionet, chain ID 61999
-- Contract: `0xAC619CE31aD990C77b988308Ab101282FE75A22E`
-- Explorer: https://explorer-studio.genlayer.com
-- Frontend: https://the-edl.vercel.app (public unauthenticated access verified)
+- Contract-changing commit: `adfde5288f514f1288a1fcfe15cf74ef2bb60a1e`
+- Canonical contract: `0x05B8B436CdA0b32f56f2C7F2d57da224c374C7D3`
+- Contract SHA-256: `CFA705BF7FB8BB7E6512CC85FB15CEC2729C0E110B665FCD411B58C5CD605E0B`
+- Network: GenLayer Studionet (61999)
+- Frontend: https://the-edl.vercel.app
+- Vercel deployment: `dpl_DRRApkKpx4wsVkNmeKTh36v5XgnU`
 
-The deployed contract is source-identical to `contracts/endline.py`, SHA-256 `1BB6D7DBE96DD25B450F347BEAA67EA5BE08D8C9A298EA8B5F098A52CD89167B`.
+The deployment transaction was not retained by the CLI. Source parity was checked by retrieving the deployed source with `genlayer code` and matching it to the repository source hash.
 
-Lifecycle receipts:
+Lifecycle closed with registration `0x71a5d68c366f165e1f83dd8151f5a535344406a85a1dc0d033454ea4635a80fe`, assessment 1 `0x9b6c07ad756e56f13ffaffe5111782e34286145f9b737bdb0a83cd44d5d20439`, source update `0x02ce8e4ba21ab9e884ea7b8fc4abed04b6059658d7c8f217cc7ab5fbc082fd30`, failed assessment attempt `0xfd3a340184662a3cf56f0fec9122f197ebf8af6da2b4b5a809ab57efb6f32317` (fail-closed), and successful assessment 2 retry `0xdae8d5b9cc2adb653e396d725405abf094c0f2be7c199509804e63697c5a0bdf`.
 
-- Deploy: `0xd4cd8cac1af337ea3aafc21d04b600dd48dce66d7fa1120353135e9cf3913b72`
-- Registration: `0x3b9dac2cc9d81af034cbd35da31e2b016d9bcc2265c7eb15da217ffed0afa82f`
-- Assessment 1: `0x9ab09a404536d88c5c43a13cd5a8fd82c33963d495a8a163f5d1e7ffb9621da0`
-- Source update: `0x0495135638d84bf9251faeeb3f263d25988d6213049c42073c98447c0ca670bb`
-- Assessment 2: `0xb8c2034bca0d9216837a380ee4836c2a32e58deb4f2ee6fc0f2c79838566ce31`
-
-Verified baseline: GitHub Actions run 33437277667 SUCCESS; 103 Python tests and 29 frontend tests passed. See `RELEASE_EVIDENCE.md` for security and deployment-access disposition.
+Final state is source version 2, assessment count 2, current assessment source version 2, and not stale. See `RELEASE_EVIDENCE.md` for complete receipts and npm disposition.

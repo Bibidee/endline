@@ -20,8 +20,8 @@ Canonical keys are unique per publisher: ENDLINE derives identity from `sender_a
 
 ## Status
 
-The verified Studionet contract is `0xAC619CE31aD990C77b988308Ab101282FE75A22E`. See `RELEASE_EVIDENCE.md` for finalized lifecycle receipts.
+The verified Studionet contract is `0x05B8B436CdA0b32f56f2C7F2d57da224c374C7D3`. See `RELEASE_EVIDENCE.md` for finalized lifecycle receipts.
 
-The deployed frontend is https://the-edl.vercel.app. It is built against Studionet and the verified contract, and public unauthenticated access to the production alias has been verified.
+The deployed frontend is https://the-edl.vercel.app. It is built against Studionet and the canonical contract, and public unauthenticated access to the production alias has been verified.
 
 The frozen deployed contract baseline is distinct from the repository release history; the latest verified release evidence and CI links are maintained in `RELEASE_EVIDENCE.md`.

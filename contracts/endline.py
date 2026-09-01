@@ -198,7 +198,7 @@ class EndlineRegistry(gl.Contract):
 TRANSACTION TIME (authoritative UTC): """ + self._tx_datetime() + """
 UNTRUSTED DEPENDENCY METADATA (JSON): <metadata>""" + metadata + """</metadata>
 UNTRUSTED WEB EVIDENCE: <evidence>""" + "\n---\n".join(pages) + """</evidence>
-Return structured JSON fields status, effective_date, replacement, migration_required, breaking_change, reason_code, evidence_state, summary. Status must be ACTIVE, DEPRECATED, SECURITY_ONLY, END_OF_LIFE, REPLACED, or UNKNOWN. Evidence state must be SUFFICIENT, AMBIGUOUS, or INSUFFICIENT. Reason code must be NO_CHANGE_NOTICE, OFFICIAL_DEPRECATION_NOTICE, SECURITY_MAINTENANCE_ONLY, RETIREMENT_ANNOUNCED, RETIREMENT_EFFECTIVE, SUCCESSOR_IDENTIFIED, CONFLICTING_EVIDENCE, INSUFFICIENT_EVIDENCE, or UNCLASSIFIED. Effective date is YYYY-MM-DD or empty. Replacement <=160 chars and summary <=320 chars. Precedence is effective retirement, security-only, explicit replacement, deprecation, active, unknown. Conflicts become UNKNOWN/AMBIGUOUS/CONFLICTING_EVIDENCE."""
+Return structured JSON fields status, effective_date, replacement, migration_required, breaking_change, reason_code, evidence_state, summary. Status must be ACTIVE, DEPRECATED, SECURITY_ONLY, END_OF_LIFE, REPLACED, or UNKNOWN. Evidence state must be SUFFICIENT, AMBIGUOUS, or INSUFFICIENT. Reason code must be NO_CHANGE_NOTICE, OFFICIAL_DEPRECATION_NOTICE, SECURITY_MAINTENANCE_ONLY, RETIREMENT_ANNOUNCED, RETIREMENT_EFFECTIVE, SUCCESSOR_IDENTIFIED, CONFLICTING_EVIDENCE, INSUFFICIENT_EVIDENCE, or UNCLASSIFIED. Effective date is YYYY-MM-DD or empty. Replacement must be the shortest explicit canonical successor identity copied from evidence, with no commentary, parentheses, recommendations, or phrases like latest stable release. migration_required is true only when evidence explicitly says migration is required, mandatory, necessary, or the tracked version must move away from. breaking_change is true only when evidence explicitly identifies incompatibility or breaking behaviour; do not infer it from a major version change. Replacement <=160 chars and summary <=320 chars. Precedence is effective retirement, security-only, explicit replacement, deprecation, active, unknown. Conflicts become UNKNOWN/AMBIGUOUS/CONFLICTING_EVIDENCE."""
         value = gl.nondet.exec_prompt(prompt, response_format="json")
         return self._validate_result(value)
 
@@ -213,9 +213,13 @@ Return structured JSON fields status, effective_date, replacement, migration_req
             candidate = leader()
             try: agreed = self._validate_result(leader_result.calldata)
             except Exception: return False
-            for key in ("status", "effective_date", "replacement", "migration_required", "breaking_change", "reason_code", "evidence_state"):
-                left, right = agreed[key], candidate[key]
-                if key == "replacement": left, right = self._clean(left, 160).lower(), self._clean(right, 160).lower()
+            for key in ("status", "reason_code", "evidence_state"):
+                if agreed[key] != candidate[key]: return False
+            if agreed["status"] == "END_OF_LIFE" or (agreed["status"] == "DEPRECATED" and agreed["reason_code"] == "RETIREMENT_ANNOUNCED"):
+                if agreed["effective_date"] != candidate["effective_date"]: return False
+            if agreed["status"] == "REPLACED":
+                left = self._clean(agreed["replacement"], 160).lower()
+                right = self._clean(candidate["replacement"], 160).lower()
                 if left != right: return False
             return True
         result = gl.vm.run_nondet_unsafe(leader, validator)

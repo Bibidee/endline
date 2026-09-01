@@ -108,3 +108,17 @@ def test_consensus_canonicalises_replacement_identity_but_rejects_status_change(
     direct_vm.mock_web("https://.*", {"status": 200, "body": "same evidence"})
     direct_vm.mock_llm(".*", json.dumps(result("END_OF_LIFE", "RETIREMENT_EFFECTIVE", effective_date="2026-01-01", replacement="Python 3")))
     assert direct_vm.run_validator() is False
+
+@pytest.mark.parametrize("field,value", [("breaking_change", False), ("migration_required", False), ("replacement", "Python 3.x")])
+def test_consensus_ignores_advisory_metadata_variation(direct_deploy, direct_vm, field, value):
+    contract = prepared(direct_deploy, direct_vm, result("END_OF_LIFE", "RETIREMENT_EFFECTIVE", effective_date="2020-01-01", replacement="Python 3", migration_required=True, breaking_change=True))
+    contract.assess_dependency(1)
+    direct_vm.clear_mocks(); direct_vm.mock_web("https://.*", {"status": 200, "body": "same evidence"})
+    candidate = result("END_OF_LIFE", "RETIREMENT_EFFECTIVE", effective_date="2020-01-01", replacement=value if field == "replacement" else "Python 3", migration_required=value if field == "migration_required" else True, breaking_change=value if field == "breaking_change" else True)
+    direct_vm.mock_llm(".*", json.dumps(candidate))
+    assert direct_vm.run_validator() is True
+
+def test_consensus_rejects_replaced_successor_difference(direct_deploy, direct_vm):
+    contract = prepared(direct_deploy, direct_vm, result("REPLACED", "SUCCESSOR_IDENTIFIED", replacement="Python 3")); contract.assess_dependency(1)
+    direct_vm.clear_mocks(); direct_vm.mock_web("https://.*", {"status": 200, "body": "same evidence"}); direct_vm.mock_llm(".*", json.dumps(result("REPLACED", "SUCCESSOR_IDENTIFIED", replacement="Python 4")))
+    assert direct_vm.run_validator() is False

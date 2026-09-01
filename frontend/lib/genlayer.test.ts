@@ -4,6 +4,7 @@ import {findAssessmentForVersion,findMatchingRegistration,transactionSucceeded} 
 describe("transaction success policy", () => {
   const complete={statusName:"FINALIZED",resultName:"MAJORITY_AGREE",txExecutionResultName:"FINISHED_WITH_RETURN"};
   it("accepts only a finalised, agreed, successful execution",()=>expect(transactionSucceeded(complete)).toBe(true));
+  it("accepts Studionet receipts that omit the optional execution result",()=>expect(transactionSucceeded({statusName:"FINALIZED",resultName:"MAJORITY_AGREE"})).toBe(true));
   it.each([
     {...complete,statusName:"PENDING"},
     {...complete,resultName:"MAJORITY_DISAGREE"},

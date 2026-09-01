@@ -9,7 +9,7 @@ export const readClient=()=>createClient({chain:studionet});
 export const writeClient=(address:`0x${string}`)=>createClient({chain:studionet,account:address,provider:window.ethereum});
 export {TransactionStatus,contractAddress};
 export type FinalityReceipt={statusName?:string;resultName?:string;txExecutionResultName?:string};
-export function transactionSucceeded(receipt:FinalityReceipt){return receipt.statusName==="FINALIZED"&&receipt.resultName==="MAJORITY_AGREE"&&receipt.txExecutionResultName==="FINISHED_WITH_RETURN"}
+export function transactionSucceeded(receipt:FinalityReceipt){return receipt.statusName==="FINALIZED"&&receipt.resultName==="MAJORITY_AGREE"&&(receipt.txExecutionResultName===undefined||receipt.txExecutionResultName==="FINISHED_WITH_RETURN")}
 export function transactionErrorMessage(error:unknown){if(error&&typeof error==="object"){const value=error as {code?:number;message?:unknown;shortMessage?:unknown;details?:unknown};if(value.code===4001)return "Wallet rejected transaction";for(const candidate of [value.shortMessage,value.message,value.details])if(typeof candidate==="string"&&candidate.trim())return candidate}return "Transaction could not be submitted. Check the wallet network and available GEN, then try again."}
 export async function listDependencies(){if(!contractAddress)return null;return await readClient().readContract({address:contractAddress,functionName:"get_dependencies",args:[0,50]}) as unknown as Dependency[]}
 export async function getDependencyCount(){if(!contractAddress)return null;return Number(await readClient().readContract({address:contractAddress,functionName:"get_dependency_count",args:[]}))}

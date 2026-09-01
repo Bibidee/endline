@@ -1,10 +1,11 @@
 import {describe, expect, it} from "vitest";
-import {findAssessmentForVersion,findMatchingRegistration,transactionSucceeded} from "./genlayer";
+import {findAssessmentForVersion,findMatchingRegistration,transactionConsensusAccepted,transactionSucceeded} from "./genlayer";
 
 describe("transaction success policy", () => {
   const complete={statusName:"FINALIZED",resultName:"MAJORITY_AGREE",txExecutionResultName:"FINISHED_WITH_RETURN"};
   it("accepts only a finalised, agreed, successful execution",()=>expect(transactionSucceeded(complete)).toBe(true));
   it("accepts Studionet receipts that omit the optional execution result",()=>expect(transactionSucceeded({statusName:"FINALIZED",resultName:"MAJORITY_AGREE"})).toBe(true));
+  it("accepts finalized majority consensus for authoritative readback",()=>expect(transactionConsensusAccepted({statusName:"FINALIZED",resultName:"MAJORITY_AGREE",txExecutionResultName:"FINISHED_WITH_ERROR"})).toBe(true));
   it.each([
     {...complete,statusName:"PENDING"},
     {...complete,resultName:"MAJORITY_DISAGREE"},

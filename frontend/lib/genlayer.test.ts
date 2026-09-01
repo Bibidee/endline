@@ -9,7 +9,7 @@ describe("transaction success policy", () => {
     {...complete,statusName:"PENDING"},
     {...complete,resultName:"MAJORITY_DISAGREE"},
     {...complete,txExecutionResultName:"REVERTED"},
-    {statusName:"FINALIZED",resultName:"MAJORITY_AGREE"},
+    {statusName:"FINALIZED",resultName:"MAJORITY_AGREE",txExecutionResultName:"FINISHED_WITH_ERROR"},
   ])("rejects an incomplete or unsuccessful receipt",receipt=>expect(transactionSucceeded(receipt)).toBe(false));
 });
 describe("concurrency-safe reconciliation",()=>{

@@ -47,6 +47,8 @@ def test_assess_dependency_persists_each_valid_outcome(direct_deploy, direct_vm,
     result("ACTIVE", "CONFLICTING_EVIDENCE", "AMBIGUOUS"),
     result("DEPRECATED", "RETIREMENT_EFFECTIVE"),
     result("REPLACED", "SUCCESSOR_IDENTIFIED"),
+    result("UNKNOWN", "CONFLICTING_EVIDENCE", "AMBIGUOUS", replacement="Python 3"),
+    result("UNKNOWN", "INSUFFICIENT_EVIDENCE", "INSUFFICIENT", migration_required=True),
     {"status": "ACTIVE"},
 ])
 def test_invalid_or_insufficient_adjudication_never_mutates_state(direct_deploy, direct_vm, answer):

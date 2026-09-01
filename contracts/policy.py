@@ -51,9 +51,9 @@ def validate_result(value: object) -> dict:
     status, reason, evidence = result["status"], result["reason_code"], result["evidence_state"]
     date_value, replacement = result["effective_date"], result["replacement"]
     if evidence == "INSUFFICIENT":
-        if status != "UNKNOWN" or reason != "INSUFFICIENT_EVIDENCE": raise ValueError("insufficient evidence invariant")
+        if status != "UNKNOWN" or reason != "INSUFFICIENT_EVIDENCE" or date_value or replacement or result["migration_required"] or result["breaking_change"]: raise ValueError("insufficient evidence invariant")
     elif evidence == "AMBIGUOUS":
-        if status != "UNKNOWN" or reason != "CONFLICTING_EVIDENCE": raise ValueError("ambiguous evidence invariant")
+        if status != "UNKNOWN" or reason != "CONFLICTING_EVIDENCE" or date_value or replacement or result["migration_required"] or result["breaking_change"]: raise ValueError("ambiguous evidence invariant")
     elif status == "ACTIVE":
         if reason != "NO_CHANGE_NOTICE" or date_value or replacement or result["migration_required"] or result["breaking_change"]: raise ValueError("active compatibility invariant")
     elif status == "DEPRECATED":

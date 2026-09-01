@@ -107,8 +107,8 @@ class EndlineRegistry(gl.Contract):
         self._require(self._valid_date(value["effective_date"]), "invalid effective date")
         status, reason, evidence = value["status"], value["reason_code"], value["evidence_state"]
         date, replacement = value["effective_date"], value["replacement"]
-        if evidence == "INSUFFICIENT": self._require(status == "UNKNOWN" and reason == "INSUFFICIENT_EVIDENCE", "insufficient evidence invariant")
-        elif evidence == "AMBIGUOUS": self._require(status == "UNKNOWN" and reason == "CONFLICTING_EVIDENCE", "ambiguous evidence invariant")
+        if evidence == "INSUFFICIENT": self._require(status == "UNKNOWN" and reason == "INSUFFICIENT_EVIDENCE" and not date and not replacement and not value["migration_required"] and not value["breaking_change"], "insufficient evidence invariant")
+        elif evidence == "AMBIGUOUS": self._require(status == "UNKNOWN" and reason == "CONFLICTING_EVIDENCE" and not date and not replacement and not value["migration_required"] and not value["breaking_change"], "ambiguous evidence invariant")
         elif status == "ACTIVE": self._require(reason == "NO_CHANGE_NOTICE" and not date and not replacement and not value["migration_required"] and not value["breaking_change"], "active compatibility invariant")
         elif status == "DEPRECATED": self._require(reason in ("OFFICIAL_DEPRECATION_NOTICE", "RETIREMENT_ANNOUNCED") and (reason == "RETIREMENT_ANNOUNCED" or not date), "deprecation compatibility invariant")
         elif status == "SECURITY_ONLY": self._require(reason == "SECURITY_MAINTENANCE_ONLY" and not date and not replacement, "security compatibility invariant")

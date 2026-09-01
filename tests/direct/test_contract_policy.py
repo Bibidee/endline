@@ -27,6 +27,7 @@ def test_result_accepts_eol(): assert validate_result(result(status="END_OF_LIFE
 def test_eol_allows_successor_metadata():
     assert validate_result(result(status="END_OF_LIFE", reason_code="RETIREMENT_EFFECTIVE", effective_date="2026-01-01", replacement="Python 3", migration_required=True))["status"] == "END_OF_LIFE"
 def test_result_accepts_unknown(): assert validate_result(result(status="UNKNOWN",reason_code="INSUFFICIENT_EVIDENCE",evidence_state="INSUFFICIENT"))["status"] == "UNKNOWN"
+def test_result_accepts_clean_ambiguous_unknown(): assert validate_result(result(status="UNKNOWN",reason_code="CONFLICTING_EVIDENCE",evidence_state="AMBIGUOUS"))["status"] == "UNKNOWN"
 @pytest.mark.parametrize("field", ["status","effective_date","replacement","migration_required","breaking_change","reason_code","evidence_state","summary"])
 def test_missing_required_field_rejected(field):
     value=result(); del value[field]
@@ -56,6 +57,10 @@ def test_insufficient_deprecated_rejected():
     with pytest.raises(ValueError): validate_result(result(status="DEPRECATED", evidence_state="INSUFFICIENT"))
 def test_insufficient_requires_its_reason_code():
     with pytest.raises(ValueError): validate_result(result(status="UNKNOWN", evidence_state="INSUFFICIENT"))
+@pytest.mark.parametrize("evidence,reason", [("AMBIGUOUS","CONFLICTING_EVIDENCE"),("INSUFFICIENT","INSUFFICIENT_EVIDENCE")])
+@pytest.mark.parametrize("field,value", [("replacement","Python 3"),("effective_date","2026-01-01"),("migration_required",True),("breaking_change",True)])
+def test_unknown_uncertain_evidence_rejects_lifecycle_metadata(evidence, reason, field, value):
+    with pytest.raises(ValueError): validate_result(result(status="UNKNOWN", evidence_state=evidence, reason_code=reason, **{field:value}))
 def test_retirement_active_rejected():
     with pytest.raises(ValueError): validate_result(result(reason_code="RETIREMENT_EFFECTIVE"))
 def test_retirement_requires_end_of_life():

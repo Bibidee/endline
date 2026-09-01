@@ -220,6 +220,17 @@ State-relevant fields:
 
 `summary` is diagnostic only and should not cause disagreement if all state-relevant fields agree.
 
+### Compatibility matrix
+
+- `ACTIVE` requires `NO_CHANGE_NOTICE`, no date/replacement, and both booleans false.
+- `DEPRECATED` requires an official deprecation or retirement announcement; retirement announcements may include an effective date and successor/migration metadata.
+- `SECURITY_ONLY` requires `SECURITY_MAINTENANCE_ONLY` and no retirement date or replacement.
+- `END_OF_LIFE` requires `RETIREMENT_EFFECTIVE` and a valid effective date; successor and migration metadata are allowed.
+- `REPLACED` requires `SUCCESSOR_IDENTIFIED` and a non-empty replacement identity.
+- `UNKNOWN` is reserved for unclassified, insufficient, or conflicting evidence and cannot carry lifecycle metadata.
+
+Validator equivalence compares status, reason code, evidence state, effective date, and boolean migration/breaking semantics. Replacement text is compared after trimming, collapsing whitespace, and lowercasing; summaries are excluded.
+
 ## Failure policy
 
 ### Fetch failure
